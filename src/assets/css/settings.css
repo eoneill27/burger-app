@@ -1,0 +1,50 @@
+html {
+	--black: #111111;
+	--white: #efefef;
+
+	--neutral-stuffs: gray;
+
+	--color: hsla(206, 66%, 77%, 1);
+	--highlight: hsla(190, 90%, 60%, 1);
+
+	--shadow: rgba(0, 0, 0, 0.8);
+
+	--corners: 10px; /* or whatevers */
+
+	--paper: #fffffe;
+	--ink: #1b2d45;
+
+	--button: #9cffd5;
+	--button-text: #00214d;
+
+	--main: #f8cd0e;
+
+	--highlight: #fb9b02; /* orange */
+	--secondary: #fd6089; /* pink */
+	--tertiary: #b5e352; /* green */
+	--stroke: #4491e0; /* celestial blue */
+
+	--background: #d99cff; /* purple */
+
+	--contrast-gray: #f2f4f6;
+}
+
+@media (prefers-color-scheme: dark) {
+	html {
+		--black: #111111;
+		--white: #efefef;
+
+		--neutral-stuffs: gray;
+
+		--color: hsla(206, 66%, 47%, 1);
+		--highlight: hsla(190, 90%, 40%, 1);
+
+		--shadow: rgba(0, 0, 0, 0.8);
+
+		--corners: 10px; /* or whatevers */
+
+		--paper: hsla(217, 8%, 13%, 1);
+		--paper2: hsla(217, 6%, 17%, 1); /*bunker*/
+		--ink: hsla(0, 0%, 96%, 1); /*whitesmoke*/
+	}
+}

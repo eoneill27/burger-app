@@ -1,0 +1,17 @@
+/* buttons and icons and smaller reusable bits here */
+
+@import 'forms';
+
+.std-button {
+	background-color: var(--paper);
+	border-radius: 8px;
+	font-size: 1.1rem;
+	padding: 0.2em 1em;
+	border: 2px solid black;
+	margin-top: 15px;
+}
+
+.std-button:hover {
+	background-color: var(--secondary);
+	color: white;
+}
