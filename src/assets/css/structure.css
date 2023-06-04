@@ -13,7 +13,7 @@ body {
 }
 
 header {
-	background-color: var(--tertiary);
+	background-color: var(--paper);
 	padding-top: 20px;
 	padding-bottom: 20px;
 	position: sticky;
@@ -58,7 +58,7 @@ main {
 }
 
 footer {
-	background-color: var(--highlight);
+	background-color: var(--footer);
 	padding-top: 20px;
 	padding-bottom: 20px;
 }

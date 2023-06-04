@@ -19,12 +19,14 @@ html {
 
 	--main: #f8cd0e;
 
-	--highlight: #fb9b02; /* orange */
-	--secondary: #fd6089; /* pink */
-	--tertiary: #b5e352; /* green */
-	--stroke: #4491e0; /* celestial blue */
+	--highlight: #f3a099; /* pink */
+	--secondary: #ffcc02; /* tangerine */
+	--tertiary: #60c0d2; /* blue */
+	--stroke: #f0c5bd; /* light pink */
 
-	--background: #d99cff; /* purple */
+	--background: #f5dba5; /* light yellow */
+
+	--footer: #d2edf2; /* light blue */
 
 	--contrast-gray: #f2f4f6;
 }
