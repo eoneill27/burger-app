@@ -2,7 +2,7 @@
 /* don't think you can... might have to be higher up (the top of) the food chain! */
 
 .heyyou-voice {
-	font-family: 'Avenir', sans-serif;
+	font-family: 'League Spartan', 'Avenir', sans-serif;
 	font-size: clamp(36px, 5vw, 60px);
 	font-weight: 500;
 	color: var(--stroke);
@@ -14,25 +14,25 @@
 }
 
 .attention-voice {
-	font-family: 'Avenir', sans-serif;
+	font-family: 'League Spartan', 'Avenir', sans-serif;
 	font-size: 30px;
 }
 
 .info-voice {
-	font-family: 'Avenir', sans-serif;
+	font-family: 'League Spartan', 'Avenir', sans-serif;
 	font-size: 24px;
 }
 
 .reading-voice,
 p,
 li {
-	font-family: 'Avenir', sans-serif;
+	font-family: 'League Spartan', 'Avenir', sans-serif;
 	font-size: 1rem;
 	line-height: 1.4;
 }
 
 .strong-voice {
-	font-family: 'Avenir', sans-serif;
+	font-family: 'League Spartan', 'Avenir', sans-serif;
 	font-size: 1rem;
 	line-height: 1.4;
 	font-weight: 700;
