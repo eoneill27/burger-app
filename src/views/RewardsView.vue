@@ -1,7 +1,15 @@
 <script setup></script>
 
 <template>
-	<h1>Rewards</h1>
+	<section class="rewards-header view-header">
+		<div class="inner-column">
+			<h1 class="heyyou-voice">Rewards</h1>
+		</div>
+	</section>
 </template>
 
-<style></style>
+<style scoped>
+	.rewards-header {
+		background-color: var(--highlight);
+	}
+</style>
