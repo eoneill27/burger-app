@@ -1,0 +1,88 @@
+[
+	{
+		"menuName": "Burgers",
+		"menuSlug": "burgers",
+		"menuItems": [
+			{
+				"name": "Classic cheeseburger",
+				"slug": "classic-cheeseburger"
+			},
+			{
+				"name": "Bacon cheeseburger",
+				"slug": "bacon-cheeseburger"
+			}
+		]
+	},
+	{
+		"menuName": "Hot dogs",
+		"menuSlug": "hotdogs",
+		"menuItems": [
+			{
+				"name": "Regular dog",
+				"slug": "regular-dog"
+			},
+			{
+				"name": "Chili dog",
+				"slug": "chili-dog"
+			}
+		]
+	},
+	{
+		"menuName": "Sides",
+		"menuSlug": "sides",
+		"menuItems": [
+			{
+				"name": "French fries",
+				"slug": "french-fries"
+			},
+			{
+				"name": "Curly fries",
+				"slug": "curly-fries"
+			},
+			{
+				"name": "Onion rings",
+				"slug": "onion-rings"
+			}
+		]
+	},
+	{
+		"menuName": "Shakes",
+		"menuSlug": "shakes",
+		"menuItems": [
+			{
+				"name": "Chocolate",
+				"slug": "chocolate"
+			},
+			{
+				"name": "Vanilla",
+				"slug": "vanilla"
+			},
+			{
+				"name": "Strawberry",
+				"slug": "strawberry"
+			}
+		]
+	},
+	{
+		"menuName": "Drinks",
+		"menuSlug": "drinks",
+		"menuItems": [
+			{
+				"name": "Coca cola",
+				"slug": "coca-cola"
+			},
+			{
+				"name": "Sprite",
+				"slug": "sprite"
+			},
+			{
+				"name": "Coffee",
+				"slug": "coffee"
+			},
+			{
+				"name": "Tea",
+				"slug": "tea"
+			}
+		]
+	}
+]
