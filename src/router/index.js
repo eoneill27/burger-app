@@ -7,6 +7,7 @@ import LoginView from '../views/LoginView.vue';
 import MenuView from '../views/MenuView.vue';
 import RewardsView from '../views/RewardsView.vue';
 import SignupView from '../views/SignupView.vue';
+import DetailView from '../views/DetailsView.vue';
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
@@ -50,6 +51,11 @@ const router = createRouter({
 			path: '/signup',
 			name: 'signup',
 			component: SignupView,
+		},
+		{
+			path: '/menu/:slug',
+			name: 'detail',
+			component: DetailView
 		}
 		// {
 		// 	path: '/about',
