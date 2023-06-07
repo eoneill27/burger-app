@@ -18,7 +18,7 @@ header {
 	padding-bottom: 20px;
 	position: sticky;
 	box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-	margin-bottom: 30px;
+/*	margin-bottom: 30px;*/
 }
 
 header .inner-column {
@@ -45,7 +45,8 @@ header .inner-column {
 
 main {
 	flex-grow: 1; /* fill up available space + push the footer down */
-	padding-top: 20px;
+	padding-bottom: 60px;
+/*	padding-top: 20px;*/
 }
 
 .inner-column {
@@ -59,6 +60,6 @@ main {
 
 footer {
 	background-color: var(--footer);
-	padding-top: 20px;
+	padding-top: 100px;
 	padding-bottom: 20px;
 }
