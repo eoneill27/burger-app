@@ -1,7 +1,15 @@
 <script setup></script>
 
 <template>
-	<h1>Deals</h1>
+	<section class="deals-header view-header">
+		<div class="inner-column">
+			<h1 class="heyyou-voice">Deals</h1>
+		</div>
+	</section>
 </template>
 
-<style></style>
+<style>
+	.deals-header {
+		background-color: var(--tertiary);
+	}
+</style>

@@ -1,7 +1,15 @@
 <script setup></script>
 
 <template>
-	<h1>checkout</h1>
+	<section class="checkout-header view-header">
+		<div class="inner-column">
+			<h1 class="heyyou-voice">Your order</h1>
+		</div>
+	</section>
 </template>
 
-<style></style>
+<style>
+	.checkout-header {
+		background-color: var(--main);
+	}
+</style>
