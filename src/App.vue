@@ -1,5 +1,5 @@
 <script setup>
-  // import { onMounted, watch } from 'vue';
+  import { ref } from 'vue';
   import { RouterLink, RouterView, useRoute } from 'vue-router';
 
   import { useInterfaceStore } from '@/stores/interface';
@@ -7,10 +7,14 @@
   const route = useRoute();
   const ui = useInterfaceStore();
 
+  const siteMap = ref(['Home', 'Menu', 'Deals', 'Rewards', 'Account']);
+  const terms = ref(['Terms and conditions', 'Privacy policy']);
+  const footContact = ref(['About', 'Locations', 'Contact']);
+
 </script>
 
 <template>
-  <header :class="`${ui.menuClass} ${route.name}`">
+  <header :class="`${ui.menuClass} ${route.name}`" class="site-header">
     <div class="inner-column">
       <nav class="site-nav">
         <RouterLink to="/menu" class="reading-voice router-link">Menu</RouterLink>
@@ -39,14 +43,32 @@
   </header>
 
   <main>
-    <div class="inner-column">
+
       <RouterView />
-    </div>
+
   </main>
 
   <footer class="site-footer">
+<!--     <picture class="foot-logo">
+      <img src="./assets/logo.svg" alt="">
+    </picture> -->
+    <div class="foot-logo">
+      <h3 class="info-voice"><RouterLink to="/" >BURGER JOINT</RouterLink></h3>
+      <p class="nav-voice">Copyright 2023</p>
+    </div>
+
     <div class="inner-column">
-      <p class="reading-voice">This is the footer</p>
+      <ul class="site-menu">
+        <li v-for="link in siteMap" class="nav-voice">{{link}}</li>
+      </ul>
+
+      <ul class="terms">
+        <li v-for="link in terms" class="nav-voice">{{link}}</li>
+      </ul>
+
+      <ul class="footer-contact">
+        <li v-for="link in footContact" class="nav-voice">{{link}}</li>
+      </ul>
     </div>
   </footer>
 </template>
@@ -62,6 +84,13 @@
 
   header .inner-column {
     display: flex;
+  }
+
+  .site-header .router-link:hover {
+    text-decoration: underline;
+    text-decoration-color: var(--secondary);
+    text-decoration-thickness: 3px;
+    text-underline-offset: 0.3em;
   }
 
   header .mobile-menu {
@@ -90,25 +119,6 @@
   .mobile-menu button {
     margin-top: 40px;
   }
-
-  .toggle-menu {
-/*    background-color: var(--paper);
-    font-size: 1.1rem;
-    padding: 0.2em 1em;
-    border: 3px solid var(--main);
-    margin-top: 15px;
-    box-shadow: -7px 7px var(--main);*/
-/*    background-color: var(--paper);*/
-/*    border-radius: 8px;*/
-/*    font-size: 1.1rem;
-    padding: 0.2em 1em;*/
-/*    border: 2px solid black;*/
-  }
-
-/*  .toggle-menu:hover {
-    background-color: var(--secondary);
-    color: white;
-  }*/
 
   .site-nav {
     display: none;
@@ -143,5 +153,40 @@
     .cart-account {
       gap: 30px;
     }
+  }
+
+  .site-footer .inner-column {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+
+  }
+
+  .terms {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .foot-logo {
+    max-width: 250px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .foot-logo .router-link-active {
+    text-decoration: none;
+  }
+
+  .site-footer li:hover, .foot-logo h3:hover{
+    text-decoration: underline;
+    text-decoration-color: var(--secondary);
+    text-decoration-thickness: 3px;
+    text-underline-offset: 0.2em;
   }
 </style>
