@@ -1,14 +1,11 @@
 <script setup>
 	import { ref, reactive } from 'vue';
-	import { useCurrentUser } from 'vuefire';
 	import { useInterfaceStore } from '@/stores/interface';
 	import { useUsersStore } from '@/stores/users';
 	import { v4 as uuidv4 } from 'uuid';
 
 	const ui = useInterfaceStore();
 	const users = useUsersStore();
-
-	const current = useCurrentUser();
 
 	const user = reactive({
 		email: "",
