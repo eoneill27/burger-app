@@ -1,18 +1,43 @@
 import { reactive } from 'vue';
 import { defineStore } from 'pinia';
 
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+
+
+
 export const useUsersStore = defineStore('users', () => {
-	const list = reactive([]);
+	
+	const auth = getAuth();
 
-	function add(user) {
-		list.push(user);
+	function signUp(email, password) {
+
+		createUserWithEmailAndPassword(auth, email, password)
+			. then((userCredential) => {
+				// signed in
+				const user = userCredential.user;
+				console.log(user);
+			})
+			.catch((error) => {
+				const errorCode = error.code;
+				const errorMessage = error.message;
+				console.log (errorCode, errorMessage);
+			})
 	}
 
-	function clear(user) {
-		user = '';
-	}
+	return { auth, signUp};
 
-	return { list, add, clear };
+
+	// const list = reactive([]);
+
+	// function add(user) {
+	// 	list.push(user);
+	// }
+
+	// function clear(user) {
+	// 	user = '';
+	// }
+
+	// return { list, add, clear };
 });
 
 // function initialize() {

@@ -1,13 +1,14 @@
 <script setup>
-	import {ref, reactive} from 'vue';
-
+	import { ref, reactive } from 'vue';
+	import { useCurrentUser } from 'vuefire';
 	import { useInterfaceStore } from '@/stores/interface';
 	import { useUsersStore } from '@/stores/users';
-
 	import { v4 as uuidv4 } from 'uuid';
 
 	const ui = useInterfaceStore();
 	const users = useUsersStore();
+
+	const current = useCurrentUser();
 
 	const user = reactive({
 		email: "",
@@ -17,13 +18,6 @@
 		password: "",
 		passwordConf: "",
 	});
-
-
-	// const passwordValidation = ref('');
-
-
-	// const noMessage = ref("Your password does not match. Please double check.");
-	// let message = ref();
 
 	function passConfirm() {
 		console.log(user.password);
@@ -38,25 +32,9 @@
 		} else if (user.password === user.passwordConf) {
 			console.log('Your passwords match');
 			ui.pwValidation = false;
-			signUp();
+			users.signUp(user.email, user.password);
+			clear();
 		}
-	}
-
-	function signUp() {
-		const userArray = ref([]);
-		const userInfo = {
-			email: user.email,
-			firstName: user.firstName,
-			lastName: user.lastName,
-			birthday: user.birthday,
-			password: user.password,
-			id: uuidv4()
-		}
-
-		users.add(userInfo);
-		console.log(users.list);
-		localStorage.setItem(userInfo.id, JSON.stringify(userInfo));
-		clear();
 	}
 
 	function clear() {
@@ -78,7 +56,7 @@
 			<label class="reading-voice" for="email">Email address</label>
 			<input v-model="user.email" class="reading-voice" id="signupEmail" type="email" required>
 		</div>
-		<div class="form-field">
+<!-- 		<div class="form-field">
 			<label class="reading-voice" for="signupFirst">First name</label>
 			<input v-model="user.firstName" class="reading-voice" id="signupFirst" type="text" required>
 		</div>
@@ -89,7 +67,7 @@
 		<div class="form-field">
 			<label class="reading-voice" for="password">Birthday</label>
 			<input v-model="user.birthday" class="reading-voice" id="signupBirth" type="date">
-		</div>
+		</div> -->
 		<div class="form-field">
 			<label class="reading-voice" for="signupPass">Password</label>
 			<input v-model="user.password" class="reading-voice" id="signupPass" type="password" required>

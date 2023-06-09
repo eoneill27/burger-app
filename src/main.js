@@ -19,6 +19,6 @@ app.use(VueFire, {
 	modules: [
 		VueFireAuth(),
 	],
-})
+});
 
 app.mount('#app');
