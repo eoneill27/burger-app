@@ -1,13 +1,15 @@
 import { reactive } from 'vue';
 import { defineStore } from 'pinia';
 
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { useCurrentUser } from 'vuefire';
+import { getAuth, createUserWithEmailAndPassword, signOut } from 'firebase/auth';
 
 
 
 export const useUsersStore = defineStore('users', () => {
 	
 	const auth = getAuth();
+	const current = useCurrentUser();
 
 	function signUp(email, password) {
 
@@ -24,7 +26,17 @@ export const useUsersStore = defineStore('users', () => {
 			})
 	}
 
-	return { auth, signUp};
+	function logOut() {
+		signOut(auth)
+			.then(() => {
+				//sign out successful
+			})
+			.catch ((error) => {
+				console.log(error);
+			});
+	}
+
+	return { auth, current, signUp, logOut };
 
 
 	// const list = reactive([]);
