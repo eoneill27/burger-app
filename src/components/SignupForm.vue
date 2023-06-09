@@ -4,6 +4,10 @@
 	import { useUsersStore } from '@/stores/users';
 	import { v4 as uuidv4 } from 'uuid';
 
+	import { useRouter, useRoute } from 'vue-router';
+	const router = useRouter();
+	const route = useRoute();
+
 	const ui = useInterfaceStore();
 	const users = useUsersStore();
 
@@ -30,7 +34,8 @@
 			console.log('Your passwords match');
 			ui.pwValidation = false;
 			users.signUp(user.email, user.password);
-			clear();
+			router.push('/account');
+			console.log(users.auth);
 		}
 	}
 
@@ -48,11 +53,13 @@
 </script>
 
 <template>
+
 	<form @submit.prevent="passConfirm" id="signup-form" autocomplete="off">
 		<div class="form-field">
 			<label class="reading-voice" for="email">Email address</label>
 			<input v-model="user.email" class="reading-voice" id="signupEmail" type="email" required>
 		</div>
+	
 <!-- 		<div class="form-field">
 			<label class="reading-voice" for="signupFirst">First name</label>
 			<input v-model="user.firstName" class="reading-voice" id="signupFirst" type="text" required>
