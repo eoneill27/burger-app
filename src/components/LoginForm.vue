@@ -1,50 +1,16 @@
 <script setup>
 	import { ref, reactive } from 'vue';
+	import { useUsersStore } from '@/stores/users';
+
+	const users = useUsersStore();
 
 	const loginEmail = ref('');
 	const loginPassword = ref('');
 
-	const user = reactive(
-		{
-			userId: loginEmail,
-			userPassword: loginPassword
-		}
-	)
-
-	const userArray = reactive([
-		{
-			userId: 'oneill.emily@gmail.com',
-			userPassword: 'goldfish'
-		},
-		{
-			userId: 'ann.broadberry@gmail.com',
-			userPassword: 'dungbeetle'
-		}
-	])
-
-	function test() {
-		const loginInfo = {
-			userId: user.userId,
-			userPassword: user.userPassword
-		}
-
-		console.log(loginInfo);
-
-		for (let i = 0; i < userArray.length; i++) {
-			if ((loginInfo.userId === userArray[i].userId) && (loginInfo.userPassword === userArray[i].userPassword)) {
-				console.log(userArray[i].userId, userArray[i].userPassword);
-
-			} 
-		}
-
-		user.userId = '';
-		user.userPassword = '';
-	}
-
 </script>
 
 <template>
-	<form @submit.prevent="test" id="login-form">
+	<form @submit.prevent="users.logIn(loginEmail, loginPassword)" id="login-form">
 		<div class="form-field">
 			<label class="reading-voice" for="email">Email address</label>
 			<input v-model="loginEmail" class="reading-voice" id="loginEmail" type="email">

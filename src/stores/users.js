@@ -2,7 +2,7 @@ import { reactive } from 'vue';
 import { defineStore } from 'pinia';
 
 import { useCurrentUser } from 'vuefire';
-import { getAuth, createUserWithEmailAndPassword, signOut } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 
 
 
@@ -26,6 +26,19 @@ export const useUsersStore = defineStore('users', () => {
 			})
 	}
 
+	function logIn(email, password) {
+		signInWithEmailAndPassword(auth, email, password)
+			.then((userCredential) => {
+				//signed in
+				const user = userCredential.user;
+			})
+			.catch((error) => {
+				const errorCode = error.code;
+				const errorMessage = error.message;
+				console.log(errorMessage);
+			});
+	}
+
 	function logOut() {
 		signOut(auth)
 			.then(() => {
@@ -36,7 +49,7 @@ export const useUsersStore = defineStore('users', () => {
 			});
 	}
 
-	return { auth, current, signUp, logOut };
+	return { auth, current, signUp, logIn, logOut };
 
 
 	// const list = reactive([]);
