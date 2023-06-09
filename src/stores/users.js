@@ -35,7 +35,9 @@ export const useUsersStore = defineStore('users', () => {
 			.catch((error) => {
 				const errorCode = error.code;
 				const errorMessage = error.message;
-				console.log(errorMessage);
+				if (error.code === 'auth/user-not-found') {
+					alert("We can't find your account. Have you signed up yet?")
+				}
 			});
 	}
 
