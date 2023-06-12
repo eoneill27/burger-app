@@ -11,6 +11,7 @@
   const terms = ref(['Terms and conditions', 'Privacy policy']);
   const footContact = ref(['About', 'Locations', 'Contact']);
 
+
 </script>
 
 <template>
@@ -43,15 +44,16 @@
   </header>
 
   <main>
-
+<Suspense>
       <RouterView />
-
+</Suspense>
   </main>
 
   <footer class="site-footer">
 <!--     <picture class="foot-logo">
       <img src="./assets/logo.svg" alt="">
     </picture> -->
+
     <div class="foot-logo">
       <h3 class="info-voice"><RouterLink to="/" >BURGER JOINT</RouterLink></h3>
       <p class="nav-voice">Copyright 2023</p>

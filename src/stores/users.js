@@ -1,23 +1,40 @@
 import { reactive } from 'vue';
 import { defineStore } from 'pinia';
-
-import { useCurrentUser } from 'vuefire';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-
-
+import { useFirestore, useCollection, useCurrentUser, useFirebaseAuth, useDocument} from 'vuefire';
+import { collection, doc, addDoc, setDoc, getDoc} from 'firebase/firestore';
+import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, signOut } from 'firebase/auth';
 
 export const useUsersStore = defineStore('users', () => {
 	
-	const auth = getAuth();
-	const current = useCurrentUser();
 
-	function signUp(email, password) {
+	const auth = getAuth();
+	const authInstance = useFirebaseAuth();
+	// the 2 things above are the same
+
+	// 
+	// const authUser = auth.currentUser;
+	const current = useCurrentUser();
+	const db = useFirestore();
+	const userCollection = useCollection(collection(db, 'users'));
+	// this is an array - can use v-for 'user in userCollection' :key='user.id'
+
+	// const userRef = doc(db, 'users', auth.uid);
+	// const userDoc = useDocument(userRef);
+
+	function signUp(name, email, password) {
 
 		createUserWithEmailAndPassword(auth, email, password)
-			. then((userCredential) => {
+			.then((userCredential) => {
 				// signed in
 				const user = userCredential.user;
+				const uid = user.uid;
 				console.log(user);
+				setDoc(doc(db, "users", uid), {
+					displayName: name,
+					email: email,
+					uid: uid,
+				});
+
 			})
 			.catch((error) => {
 				const errorCode = error.code;
@@ -39,6 +56,7 @@ export const useUsersStore = defineStore('users', () => {
 					alert("We can't find your account. Have you signed up yet?")
 				}
 			});
+
 	}
 
 	function logOut() {
@@ -51,7 +69,20 @@ export const useUsersStore = defineStore('users', () => {
 			});
 	}
 
-	return { auth, current, signUp, logIn, logOut };
+	function updateUser(name) {
+		updateProfile(auth.currentUser, {
+		  displayName: name
+		}).then(() => {
+		  // Profile updated!
+		  // ...
+		}).catch((error) => {
+		  // An error occurred
+		  // ...
+			console.log(error.message);
+		});
+	}
+
+	return { db, auth, authInstance, current, signUp, logIn, updateUser, logOut };
 
 
 	// const list = reactive([]);
