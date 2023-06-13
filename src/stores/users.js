@@ -1,40 +1,66 @@
-import { reactive } from 'vue';
+import { reactive, computed } from 'vue';
 import { defineStore } from 'pinia';
 import { useFirestore, useCollection, useCurrentUser, useFirebaseAuth, useDocument} from 'vuefire';
 import { collection, doc, addDoc, setDoc, getDoc} from 'firebase/firestore';
 import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, signOut } from 'firebase/auth';
-
+import { useRouter } from 'vue-router';
 export const useUsersStore = defineStore('users', () => {
 	
-
 	const auth = getAuth();
 	const authInstance = useFirebaseAuth();
 	// the 2 things above are the same
 
-	// 
 	// const authUser = auth.currentUser;
 	const current = useCurrentUser();
 	const db = useFirestore();
+	// db can be whatever you want. This is the whole instance of the Firestore.
 	const userCollection = useCollection(collection(db, 'users'));
 	// this is an array - can use v-for 'user in userCollection' :key='user.id'
 
-	// const userRef = doc(db, 'users', auth.uid);
-	// const userDoc = useDocument(userRef);
+	const router = useRouter();
 
-	function signUp(name, email, password) {
+	const uid = computed(() => current.value?.uid);
 
-		createUserWithEmailAndPassword(auth, email, password)
+	const userDocPath = computed(function() {
+		if(uid.value) {
+			return doc(collection(db, 'users'), uid.value)
+		} else {
+			return '';
+		}
+	})
+
+	const {
+		data: docUser,
+		promise
+	} = useDocument(userDocPath);
+
+	const name = computed (() => docUser.value.displayName);
+
+	async function createUserDoc(uid, form) {
+		await setDoc(doc(db, "users", uid), {
+			displayName: form.name,
+			email: form.email,
+			uid: uid
+		})
+		alert ('User doc created');
+	}
+
+	function signUp(form) {
+
+		createUserWithEmailAndPassword(auth, form.email, form.password)
 			.then((userCredential) => {
 				// signed in
 				const user = userCredential.user;
 				const uid = user.uid;
 				console.log(user);
-				setDoc(doc(db, "users", uid), {
-					displayName: name,
-					email: email,
-					uid: uid,
-				});
 
+				createUserDoc(uid, form);
+				// setDoc(doc(db, "users", uid), {
+				// 	displayName: form.name,
+				// 	email: form.email,
+				// 	uid: uid,
+				// });
+				router.push('/account');
 			})
 			.catch((error) => {
 				const errorCode = error.code;
@@ -82,26 +108,22 @@ export const useUsersStore = defineStore('users', () => {
 		});
 	}
 
-	return { db, auth, authInstance, current, signUp, logIn, updateUser, logOut };
+	return { 
+		db, 
+		auth, 
+		authInstance, 
+		current, 
 
+		uid,
+		name,
+		docUser,
 
-	// const list = reactive([]);
+		signUp, 
+		logIn, 
+		updateUser, 
+		logOut ,
+	}
 
-	// function add(user) {
-	// 	list.push(user);
-	// }
-
-	// function clear(user) {
-	// 	user = '';
-	// }
-
-	// return { list, add, clear };
 });
 
-// function initialize() {
-// 	if(data.getItem('game')) {
-// 		// local storage is set up - great
-// 	} else {
-// 		data.setItem('game', JSON.stringify({score: 0}));
-// 	}
-// }
+
