@@ -11,11 +11,9 @@
 	const users = useUsersStore();
 
 	const edit = ref(false);
-
 	function toggleEdit() {
 		edit.value = !edit.value;
 	}
-
 	const editClass = computed(function () {
 		if (edit.value) {
 			console.log('editing');
@@ -24,88 +22,23 @@
 		}
 	});
 
-	// function createUserDoc() {
-	// 	setDoc(doc(users.db, "users", users.current.uid), {
-	// 		displayName: user.displayName,
-	// 		email: users.current.email,
-	// 		uid: users.current.uid
-	// 	});
-
-	// 	// toggleEdit();
-	// 	console.log("profile updated");
-	// }
-
 	const user = reactive({
 		displayName: "",
 		email: ""
 	});
 
-
 	const userLoaded = useIsCurrentUserLoaded();
 	const currentUser = await getCurrentUser();
 
-
-	// onMounted(async() => {
-
-		const {
-			data: userDeets,
-			pending,
-			error,
-			promise
-		} = useDocument(doc(users.db, 'users', currentUser.uid));
-
-		console.log(userDeets);	
-
-	
-
-// })
-
-
-
-
-
-	// onMounted(async() => {
-	// 	const currentUser = await getCurrentUser();
-	// 	if (currentUser) {
-	// 		const {
-	// 			data: userDeets,
-	// 			pending,
-	// 			error,
-	// 			promise
-	// 		} = getDoc(doc(users.db, 'users', users.current.uid));
-
-	// 	console.log(userDeets)
-	// 	} return currentUser;
-	// })
-	// const {
-	// 	data: userDeets,
-	// 	pending,
-	// 	error,
-	// 	promise
-	// } = useDocument(doc(users.db, 'users', authStuff.uid));
-
-	// const docRef = doc(users.db, 'users', users.current.uid);
-
-	// const docSnap = await getDoc(docRef);
-
-	// if(docSnap.exists()) {
-	// 	console.log("Document data:", docSnap.data());
-	// } else {
-	// 	console.log("No such document!");
-	// }
-
-
-
-
-// 	const userDoc = useDocument(docRef);
-	
-
-
-// const docData = docSnap.data();
-
-
-	// const id = users.auth.currentUser.uid;
-	// const docUser = (doc(users.db, 'users', id));
+	function editUserDoc() {
+		setDoc(doc(users.db, "users", users.current.uid), {
+			displayName: user.displayName,
+			email: users.current.email,
+			uid: users.current.uid
+		});
+		toggleEdit();
+		console.log("profile updated");
+	}
 
 </script>
 
@@ -113,12 +46,13 @@
 
 	<p v-if="users.current">
 		
-<!-- 		{{users.current.uid}}
-		{{userDeets.displayName}}
-		{{userDeets.email}} -->
-	
-	</p>
+	<!-- 
+		{{userDeets?.displayName}}
+		{{userDeets?.email}}
+		{{users.uid}} -->
 		
+		{{users.name}}
+	</p>
 
 	<section class="account-header view-header">
 		<div class="inner-column">
@@ -141,12 +75,14 @@
 
 			<div class="user-info" >
 				<ul>
-					<li class="reading-voice" id="userName"><p v-if="!edit">Name: {{userDeets.displayName}} </p><button @click="toggleEdit()" type="button" v-if="!edit">Edit</button>
+					<li class="reading-voice" id="userName"><p v-if="!edit">Name: {{users.docUser.displayName}} </p><button @click="toggleEdit()" type="button" v-if="!edit">Edit</button>
+
 						<template v-if="edit">
 							<input v-model="user.displayName" type='text'>
-							<button @click="createUserDoc()">Update</button>
+							<button @click="editUserDoc()">Update</button>
 							<button type="button" @click="toggleEdit()">Cancel edit</button>
 						</template>
+
 					</li>
 					<li class="reading-voice" id="userEmail">Email: {{users.current.email}} </li>
 					<li class="reading-voice" id="userUID">UID: {{users.current.uid}} </li>
