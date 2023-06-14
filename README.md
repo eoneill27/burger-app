@@ -1,7 +1,13 @@
-# Vue 3 + Vite
+# Burger Joint app
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## Plan
 
-## Recommended IDE Setup
+- [x] set up Firebase
+- [x] set up form form sign up 
+- [x] set up Vuefire
+- [x] create 'user' document on sign up
+- [x] connect the auth user and user doc
+- [] ensure that they are always loaded before the template
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+- [] create carts subcollection for a user
+- [] create documents in that subcollection for each of the user's carts
