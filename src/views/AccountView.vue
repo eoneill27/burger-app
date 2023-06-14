@@ -27,8 +27,7 @@
 		email: ""
 	});
 
-	const userLoaded = useIsCurrentUserLoaded();
-	const currentUser = await getCurrentUser();
+	await getCurrentUser();
 
 	function editUserDoc() {
 		setDoc(doc(users.db, "users", users.current.uid), {
@@ -44,15 +43,11 @@
 
 <template>
 
-	<p v-if="users.current">
-		
-	<!-- 
-		{{userDeets?.displayName}}
-		{{userDeets?.email}}
-		{{users.uid}} -->
+<!-- 	<p v-if="users.current">
+
 		
 		{{users.name}}
-	</p>
+	</p> -->
 
 	<section class="account-header view-header">
 		<div class="inner-column">

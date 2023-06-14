@@ -1,8 +1,8 @@
 import { reactive, computed } from 'vue';
 import { defineStore } from 'pinia';
-import { useFirestore, useCollection, useCurrentUser, useFirebaseAuth, useDocument} from 'vuefire';
+import { useFirestore, useCollection, useCurrentUser, getCurrentUser, useFirebaseAuth, useDocument} from 'vuefire';
 import { collection, doc, addDoc, setDoc, getDoc} from 'firebase/firestore';
-import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, signOut } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, signOut } from 'firebase/auth';
 import { useRouter } from 'vue-router';
 export const useUsersStore = defineStore('users', () => {
 	
@@ -12,6 +12,10 @@ export const useUsersStore = defineStore('users', () => {
 
 	// const authUser = auth.currentUser;
 	const current = useCurrentUser();
+	// this returns a reactive variable - undefined value until user is loaded
+	// const getCurrent = getCurrentUser();
+	// this returns a promise of the current user
+
 	const db = useFirestore();
 	// db can be whatever you want. This is the whole instance of the Firestore.
 	const userCollection = useCollection(collection(db, 'users'));
@@ -31,6 +35,7 @@ export const useUsersStore = defineStore('users', () => {
 
 	const {
 		data: docUser,
+		pending,
 		promise
 	} = useDocument(userDocPath);
 
@@ -42,10 +47,14 @@ export const useUsersStore = defineStore('users', () => {
 			email: form.email,
 			uid: uid
 		})
-		alert ('User doc created');
+
+		await getCurrentUser();
+
+		// alert ('User doc created');
+		router.push('/account');
 	}
 
-	function signUp(form) {
+	async function signUp(form) {
 
 		createUserWithEmailAndPassword(auth, form.email, form.password)
 			.then((userCredential) => {
@@ -60,7 +69,8 @@ export const useUsersStore = defineStore('users', () => {
 				// 	email: form.email,
 				// 	uid: uid,
 				// });
-				router.push('/account');
+
+				
 			})
 			.catch((error) => {
 				const errorCode = error.code;
