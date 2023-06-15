@@ -1,9 +1,11 @@
 <script setup>
-	import MenuGrid from '@/components/MenuGrid.vue';
+	import { ref, computed } from 'vue';
+	import AllMenusGrid from '@/components/AllMenusGrid.vue';
 	import { useMenusStore } from '@/stores/menus';
 	import { useRouter, useRoute, RouterLink } from 'vue-router';
 
 	const menus = useMenusStore();
+
 </script>
 
 <template>
@@ -16,7 +18,7 @@
 
 
 	<div class="inner-column">
-		<MenuGrid />	
+		<AllMenusGrid />	
 	</div>
 
 

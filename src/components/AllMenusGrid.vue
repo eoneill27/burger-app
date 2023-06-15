@@ -1,19 +1,21 @@
 <script setup>
 	import {ref, reactive, computed } from 'vue';
 	import { useMenusStore } from '@/stores/menus';
-	import { RouterLink } from 'vue-router';
+	import { RouterLink, useRoute } from 'vue-router';
+	import { useFirestore, useCollection } from 'vuefire';
+	import { collection, doc, getDocs } from 'firebase/firestore';
 
 	const menus = useMenusStore();
-	const list = menus.list;
 
+	console.log(menus.menusCollection);
 
 </script>
 
 <template>
 
 	<ul class="menu-grid">
-		<li v-for="menu in menus.list" class="menu-card">
-			<RouterLink :to="`/menu/${menu.slug}`">{{ menu.name }}</RouterLink>
+		<li v-for="category in menus.menusCollection" :key="category.id" class="menu-card">
+			<RouterLink :to="`/menu/${category.slug}`">{{category.menuName}}</RouterLink>
 		</li>
 	</ul>
 	

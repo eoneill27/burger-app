@@ -1,6 +1,6 @@
 <script setup>
 
-	import MenuGrid from '@/components/MenuGrid.vue';
+	import AllMenusGrid from '@/components/AllMenusGrid.vue';
 	
 
 </script>
@@ -15,7 +15,7 @@
 	<section class="home-menu">
 		<div class="inner-column">
 			<h2 class="attention-voice">Menu</h2>
-			<MenuGrid class="menu-component" />
+			<AllMenusGrid class="menu-component" />
 		</div>
 	</section>
 
