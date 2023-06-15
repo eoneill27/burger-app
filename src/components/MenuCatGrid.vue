@@ -1,38 +1,48 @@
 <script setup>
 	import {ref, reactive, computed } from 'vue';
 	import { useMenusStore } from '@/stores/menus';
+	import { useUsersStore } from '@/stores/users';
 	import { RouterLink, useRoute } from 'vue-router';
-	import menuItems from '@/assets/data/menuItems.json';
-
+	import { collection, doc, getDocs, setDoc, addDoc, updateDoc } from 'firebase/firestore';
 	import { useFirestore, useCollection } from 'vuefire';
-	import { collection } from 'firebase/firestore';
 
-	const db = useFirestore();
-	const burgers = useCollection(collection(db, 'burgers'));
+
+	const menus = useMenusStore();
+	const users = useUsersStore();
 
 	const route = useRoute();
+	console.log(route.params);
 
-	console.log(menuItems);
-	const menuCat = route.params.slug;
-	console.log(menuCat);
+	const db = useFirestore();
+	const menuCats = menus.menusCollection;
 
-	const menuMatch = computed(function() {
-		for(let i = 0; i < menuItems.length; i++) {
-			if (menuItems[i].menuSlug === menuCat) {
-				// return menuItems[i].menuItems;
-				return menuItems[i].menuItems;
-			}
-		}
-	})
+	const catSlug = ref('');
+
+	const subMenuArray = useCollection(collection(db, 'food', route.params.slug, 'items'));
+
+	console.log(subMenuArray);
+
+
+	const item = ref("item1");
+	const count = ref(0);
+
+	async function addToCart(name) {
+
+		await setDoc(doc(db, "users", users.current.uid, "carts", "cart1", "items", `item${count.value++}`), {
+				item: name
+		});
+
+		alert(`${name} added to your cart`);
+	}
+
+		
 
 </script>
 
 <template>
-	<ul>
-		<li v-for="burger in burgers" :key="burger.id"> {{burger.name}}</li>
-	</ul>
+
 	<ul class="menuItem-grid">
-		<li v-for="item in menuMatch" class="menu-card">{{item.name}}</li>
+		<li v-for="item in subMenuArray" class="menu-card">{{item.name}}<button @click="addToCart(item.name)" type="button">Add to cart</button></li>
 
 	</ul>
 	
