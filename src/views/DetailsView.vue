@@ -7,21 +7,22 @@
 
 	const menus = useMenusStore();
 
-	const list = menus.list;
-
-	const router = useRouter();
 	const route = useRoute();
 	console.log(route.params);
-	const menuId = route.params.slug;
 
-	const menuCat = computed(function() {
-		for (let i = 0; i < list.length; i++) {
-			if (list[i].slug === menuId) {
-				console.log(list[i].name);
-				return list[i].name;
-			}
+
+	const menuCats = menus.menusCollection;
+
+	const catSlug = ref('');
+
+	menuCats.forEach((category) => {
+		if (category.slug === route.params.slug) {
+		catSlug.value = route.params.slug;
 		}
 	})
+
+	console.log(catSlug.value);
+
 
 </script>
 
@@ -29,7 +30,7 @@
 
 	<section class="cat-header view-header">
 		<div class="inner-column">
-			<h1 class="heyyou-voice">{{menuCat}}</h1>
+			<h1 class="heyyou-voice">{{catSlug}}</h1>
 		</div>
 	</section>
 
