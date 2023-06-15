@@ -1,30 +1,15 @@
 import { reactive, computed } from 'vue';
 import { defineStore } from 'pinia';
 
+
+import { collection, doc, getDocs } from 'firebase/firestore';
+import { useFirestore, useCollection } from 'vuefire';
+
 export const useMenusStore = defineStore('menus', function () {
 
-	const list = reactive([
-		{
-			slug: 'burgers',
-			name: 'Burgers',
-		},
-		{
-			slug: 'hotdogs',
-			name: 'Hot dogs',
-		},
-		{
-			slug: 'sides',
-			name: 'Sides',
-		},
-		{
-			slug: 'shakes',
-			name: 'Shakes',
-		},
-		{
-			slug: 'drinks',
-			name: 'Drinks'
-		}
-	]);
+	const db = useFirestore();
 
-	return { list };
+	const menusCollection = useCollection(collection(db, 'food'));
+
+	return { db, menusCollection };
 });
