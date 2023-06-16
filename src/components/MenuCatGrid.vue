@@ -4,7 +4,7 @@
 	import { useUsersStore } from '@/stores/users';
 	import { RouterLink, useRoute } from 'vue-router';
 	import { collection, doc, getDocs, setDoc, addDoc, updateDoc } from 'firebase/firestore';
-	import { useFirestore, useCollection } from 'vuefire';
+	import { useFirestore, useCollection, getCurrentUser } from 'vuefire';
 
 
 	const menus = useMenusStore();
@@ -22,11 +22,17 @@
 
 	console.log(subMenuArray);
 
+	await getCurrentUser();
+	const userOrder = useCollection(collection(db, 'users', users.current.uid, 'carts', 'cart1', 'items' ));
 
-	const item = ref("item1");
+	console.log(userOrder.value.length);
+
 	const count = ref(0);
-
+	
 	async function addToCart(name) {
+		await getCurrentUser();
+
+		count.value = userOrder.value.length;
 
 		await setDoc(doc(db, "users", users.current.uid, "carts", "cart1", "items", `item${count.value++}`), {
 				item: name
@@ -34,8 +40,6 @@
 
 		alert(`${name} added to your cart`);
 	}
-
-		
 
 </script>
 
