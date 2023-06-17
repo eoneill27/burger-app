@@ -3,13 +3,14 @@
 	import { ref, computed } from 'vue';
 	import { useMenusStore } from '@/stores/menus';
 	import { useRouter, useRoute } from 'vue-router';
-	import MenuCatGrid from '@/components/MenuCatGrid.vue';
+	import MenuItem from '@/components/MenuItem.vue';
+	import { useFirestore, useCollection } from 'vuefire';
+	import { collection } from 'firebase/firestore';
 
 	const menus = useMenusStore();
-
+	const db = useFirestore();
 	const route = useRoute();
 	console.log(route.params);
-
 
 	const menuCats = menus.menusCollection;
 
@@ -21,8 +22,7 @@
 		}
 	})
 
-	console.log(catSlug.value);
-
+	const subMenuArray = useCollection(collection(db, 'food', route.params.slug, 'items'));
 
 </script>
 
@@ -35,7 +35,12 @@
 	</section>
 
 	<div class="inner-column">
-		<MenuCatGrid />	
+		<ul class="menuItem-grid">
+			<li v-for="item in subMenuArray" :key="item.id" class="menu-card">
+				<h3 class="info-voice">{{item.name}}</h3>
+				<MenuItem :item="item"/>
+			</li>
+		</ul>
 	</div>
 </template>
 
