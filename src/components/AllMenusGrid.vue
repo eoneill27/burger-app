@@ -15,7 +15,7 @@
 
 	<ul class="menu-grid">
 		<li v-for="category in menus.menusCollection" :key="category.id" class="menu-card">
-			<RouterLink :to="`/menu/${category.slug}`">{{category.menuName}}</RouterLink>
+			<RouterLink :to="`/menu/${category.slug}`"><span class="info-voice">{{category.menuName}}</span></RouterLink>
 		</li>
 	</ul>
 	
