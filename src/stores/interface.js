@@ -3,6 +3,8 @@ import { defineStore } from 'pinia';
 
 export const useInterfaceStore = defineStore('interface', function () {
 	const mainMenuOpen = ref(false);
+	const detailsOpen = ref(false);
+	const buttonSelect = ref('Select');
 
 	const pwValidation = ref(false);
 
@@ -18,7 +20,21 @@ export const useInterfaceStore = defineStore('interface', function () {
 		}
 	});
 
-	return { mainMenuOpen, toggleMenu, menuClass, pwValidation };
+	function toggleDetails() {
+		detailsOpen.value = !detailsOpen.value;
+	}
+
+	const detailsClass = computed(function () {
+		if(detailsOpen.value) {
+			buttonSelect.value = 'Close';
+			return 'details-open';
+		} else {
+			buttonSelect.value = 'Select';
+			return 'details-closed';
+		}
+	})
+
+	return { mainMenuOpen, toggleMenu, menuClass, detailsOpen, toggleDetails, detailsClass, pwValidation, buttonSelect };
 });
 
 // import { reactive } from 'vue';
