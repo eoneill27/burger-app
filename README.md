@@ -14,3 +14,10 @@
 - [x] add items to cart without overwriting previous items
 - [] make order customizable
 - [] make it possible to increment/decrement items
+
+## Contributing
+
+- [ ] Fork project (or clone?) on Git
+- [ ] Get setup your local setup
+- [ ] `npm install` to get all the dependencies downloaded
+- [ ] You can create your own Firebase project and use it's credentials or if it's appropriate to our collaboration, I will send you the .env file
