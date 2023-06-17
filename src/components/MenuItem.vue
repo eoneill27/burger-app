@@ -69,36 +69,35 @@
 
 </script>
 <template class="menuItem-grid">
-<div :key="item.id">
 
-<button @click="toggleDetails" type="button" class="reading-voice">{{buttonSelect}}</button>
+	<button @click="toggleDetails" type="button" class="reading-voice">{{buttonSelect}}</button>
 
-<div :class="detailsClass" class="item-details">
-	<fieldset >
-		{{ingredients}}
-		<legend class="reading-voice">Customize your order:</legend>
-		<div v-for="(ingredient) in item.ingredients" >
-			<label class="reading-voice">{{ingredient}}</label>
-			<input type="checkbox" :value="ingredient" v-model="ingredients" class="reading-voice">
+	<div :class="detailsClass" class="item-details">
+		<fieldset >
+			{{ingredients}}
+			<legend class="reading-voice">Customize your order:</legend>
+			<div v-for="(ingredient) in item.ingredients" >
+				<label class="reading-voice">{{ingredient}}</label>
+				<input type="checkbox" :value="ingredient" v-model="ingredients" class="reading-voice">
+			</div>
+		</fieldset>
+
+		<div class="form-field" id="instructions">
+			<label for="specialInstr" class="reading-voice">Special instructions:</label>
+			<textarea  v-model="item.specialInstr" name="" id="specialInstr" cols="25" rows="10" class="reading-voice"></textarea>			
 		</div>
-	</fieldset>
 
-	<div class="form-field" id="instructions">
-		<label for="specialInstr" class="reading-voice">Special instructions:</label>
-		<textarea  v-model="item.specialInstr" name="" id="specialInstr" cols="25" rows="10" class="reading-voice"></textarea>			
+		<p class="reading-voice">Price: ${{item.price}}</p>
+
+		<div class="form-field" id="quantity">
+			<label for="itemQuant" class="reading-voice">Quantity:</label>
+			<input v-model="item.quant" id="itemQuant" type="number" >
+		</div>
+
+		<button @click="addToCart(item.name, ingredients, item.specialInstr, item.quant, item.price)" type="button" class="reading-voice" id="addButton">Add to cart
+		</button>
 	</div>
 
-	<p class="reading-voice">Price: ${{item.price}}</p>
-
-	<div class="form-field" id="quantity">
-		<label for="itemQuant" class="reading-voice">Quantity:</label>
-		<input v-model="item.quant" id="itemQuant" type="number" >
-	</div>
-
-	<button @click="addToCart(item.name, ingredients, item.specialInstr, item.quant, item.price)" type="button" class="reading-voice" id="addButton">Add to cart
-	</button>
-</div>
-</div>
 </template>
 <style>
 	.menuItem-grid {
