@@ -1,14 +1,19 @@
 <script setup>
 	import {ref, reactive, computed } from 'vue';
+	import MenuItem from '@/components/MenuItem.vue';
 	import { useMenusStore } from '@/stores/menus';
 	import { useUsersStore } from '@/stores/users';
+	import { useOrdersStore } from '@/stores/orders';
+	import { useInterfaceStore } from '@/stores/interface';
+
 	import { RouterLink, useRoute } from 'vue-router';
 	import { collection, doc, getDocs, setDoc, addDoc, updateDoc } from 'firebase/firestore';
 	import { useFirestore, useCollection, getCurrentUser } from 'vuefire';
 
-
 	const menus = useMenusStore();
 	const users = useUsersStore();
+	const orders = useOrdersStore();
+	const ui = useInterfaceStore();
 
 	const route = useRoute();
 	console.log(route.params);
@@ -23,22 +28,40 @@
 	console.log(subMenuArray);
 
 	await getCurrentUser();
-	const userOrder = useCollection(collection(db, 'users', users.current.uid, 'carts', 'cart1', 'items' ));
+	// const currentOrder = useCollection(collection(db, 'users', users.current.uid, 'carts', 'cart1', 'items' ));
 
-	console.log(userOrder.value.length);
+	// const currentOrderArray = currentOrder.value;
+	// console.log(currentOrderArray);
 
-	const count = ref(0);
-	
-	async function addToCart(name) {
+	// const count = ref(0);
+
+	const ingredients = ref([]);
+
+	async function addToCart(name, ingredients, specialInstr, quantity, price) {
+		
 		await getCurrentUser();
 
-		count.value = userOrder.value.length;
+		const subtotal = Number(price * quantity);
 
-		await setDoc(doc(db, "users", users.current.uid, "carts", "cart1", "items", `item${count.value++}`), {
-				item: name
+		if (specialInstr) {
+			specialInstr == specialInstr;
+		} else {
+			specialInstr = '';
+		}
+
+		await addDoc(collection(db, "users", users.current.uid, "carts", "cart1", "items"), {
+					name: name,
+					ingredients: ingredients,
+					specialInstr: specialInstr,
+					subtotal: subtotal,
+					quantity: quantity
 		});
 
-		alert(`${name} added to your cart`);
+		if (quantity > 1) {
+			alert(`${quantity} ${name}s were added to your cart`);
+		} else {
+			alert(`1 ${name} was added to your cart`);		
+		}
 	}
 
 </script>
@@ -46,7 +69,11 @@
 <template>
 
 	<ul class="menuItem-grid">
-		<li v-for="item in subMenuArray" class="menu-card">{{item.name}}<button @click="addToCart(item.name)" type="button">Add to cart</button></li>
+
+		<li v-for="item in subMenuArray" :key="item.id" class="menu-card">
+			<MenuItem :item='item'/>
+
+		</li>
 
 	</ul>
 	
@@ -85,5 +112,28 @@
 			grid-template-columns: 1fr 1fr 1fr;
 			gap: 40px;
 		}
+	}
+	.details-closed {
+		display: none;
+	}
+
+	.details-open {
+		display: block;
+	}
+
+	#instructions {
+		margin-bottom: 15px;
+	}
+
+	#quantity {
+		display: flex;
+		padding: 10px 0;
+	}
+	#itemQuant {
+		max-width: 40px;
+	}
+
+	#addButton {
+		margin-top: 15px;
 	}
 </style>
