@@ -2,13 +2,17 @@
 	import {ref, reactive, computed } from 'vue';
 	import { useMenusStore } from '@/stores/menus';
 	import { useUsersStore } from '@/stores/users';
+	import { useOrdersStore } from '@/stores/orders';
 
 	import { useRoute } from 'vue-router';
 	import { collection, doc, addDoc } from 'firebase/firestore';
-	import { useFirestore, useCollection } from 'vuefire';
+	import { useFirestore, useCollection, getCurrentUser } from 'vuefire';
+
+	defineProps(['item']);
 
 	const menus = useMenusStore();
 	const users = useUsersStore();
+	const orders = useOrdersStore();
 
 	const route = useRoute();
 	console.log(route.params);
@@ -16,7 +20,7 @@
 	const db = useFirestore();
 	const menuCats = menus.menusCollection;
 
-	defineProps(['item']);
+	// await getCurrentUser();
 
 	const ingredients = ref([]);
 
@@ -67,6 +71,7 @@
 		}
 	}
 
+
 </script>
 <template class="menuItem-grid">
 
@@ -94,7 +99,7 @@
 			<input v-model="item.quant" id="itemQuant" type="number" >
 		</div>
 
-		<button @click="addToCart(item.name, ingredients, item.specialInstr, item.quant, item.price)" type="button" class="reading-voice" id="addButton">Add to cart
+		<button @click="orders.addToCart(item.name, ingredients, item.specialInstr, item.quant, item.price)"  class="reading-voice" id="addButton" type="button">Add to cart
 		</button>
 	</div>
 
